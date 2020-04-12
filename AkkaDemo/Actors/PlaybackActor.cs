@@ -15,24 +15,24 @@ namespace AkkaDemo.Actors
 
         protected override void PreStart()
         {
-            ColorConsole.WriteLineGreen("PlaybackActor PreStart");
+            ColorConsole.WriteGreen("PlaybackActor PreStart");
         }
 
         protected override void PostStop()
         {
-            ColorConsole.WriteLineGreen("PlaybackActor PostStop");
+            ColorConsole.WriteGreen("PlaybackActor PostStop");
         }
 
         protected override void PreRestart(Exception reason, object message)
         {
-            ColorConsole.WriteLineGreen($"PlaybackActor PreRestart because: {reason}");
+            ColorConsole.WriteGreen($"PlaybackActor PreRestart because: {reason}");
 
             base.PreRestart(reason, message);
         }
 
         protected override void PostRestart(Exception reason)
         {
-            ColorConsole.WriteLineGreen($"PlaybackActor PostRestart because: {reason}");
+            ColorConsole.WriteGreen($"PlaybackActor PostRestart because: {reason}");
 
             base.PostRestart(reason);
         } 
