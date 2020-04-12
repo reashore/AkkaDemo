@@ -59,8 +59,6 @@ namespace AkkaDemo
                     break;
                 }
             }
-
-            //return Environment.Exit(1);
         }
     }
 }
