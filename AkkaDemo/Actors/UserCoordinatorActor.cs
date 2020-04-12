@@ -5,6 +5,7 @@ using AkkaDemo.Messages;
 
 namespace AkkaDemo.Actors
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class UserCoordinatorActor : ReceiveActor
     {
         private readonly Dictionary<int, IActorRef> _userDictionary;

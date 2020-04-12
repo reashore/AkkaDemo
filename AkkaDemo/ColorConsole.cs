@@ -54,10 +54,10 @@ namespace AkkaDemo
             Write(ConsoleColor.Gray, string.Format(message, args));
         }
 
-        public static void WriteLineMagenta(string message, params object[] args)
-        {
-            WriteLine(ConsoleColor.Magenta, string.Format(message, args));
-        }
+        //public static void WriteLineMagenta(string message, params object[] args)
+        //{
+        //    WriteLine(ConsoleColor.Magenta, string.Format(message, args));
+        //}
 
         public static void WriteLineWhite(string message, params object[] args)
         {

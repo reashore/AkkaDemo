@@ -3,6 +3,7 @@ using Akka.Actor;
 
 namespace AkkaDemo.Actors
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class PlaybackStatisticsActor : ReceiveActor
     {
         #region Lifecycle methods
