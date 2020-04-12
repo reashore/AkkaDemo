@@ -12,75 +12,61 @@ namespace AkkaDemo.Actors
         public UserActor(int userId)
         {
             _userId = userId;
-
             Stopped();
         }
 
         private void Playing()
         {
-            Receive<PlayMovieMessage>(
-                message => ColorConsole.WriteLineRed(
-                    "UserActor {0} Error: cannot start playing another movie before stopping existing one", _userId));
-           
+            Receive<PlayMovieMessage>(message => ColorConsole.WriteLineRed($"UserActor {_userId} Error: cannot start playing another movie before stopping existing one"));
             Receive<StopMovieMessage>(message => StopPlayingCurrentMovie());
-
-            ColorConsole.WriteLineYellow("UserActor {0} has now become Playing", _userId);
+            ColorConsole.WriteLineYellow($"UserActor {_userId} has now become Playing");
         }
 
         private void Stopped()
         {
             Receive<PlayMovieMessage>(message => StartPlayingMovie(message.MovieTitle));
-          
-            Receive<StopMovieMessage>(
-                message => ColorConsole.WriteLineRed("UserActor {0} Error: cannot stop if nothing is playing", _userId));
-
-            ColorConsole.WriteLineYellow("UserActor {0} has now become Stopped", _userId);
+            Receive<StopMovieMessage>(message => ColorConsole.WriteLineRed($"UserActor {_userId} Error: cannot stop if nothing is playing"));
+            ColorConsole.WriteLineYellow($"UserActor {_userId} has now become Stopped");
         }
         
         private void StartPlayingMovie(string title)
         {
             _currentlyWatching = title;
-
-            ColorConsole.WriteLineYellow("UserActor {0} is currently watching '{1}'", _userId, _currentlyWatching);
-
+            ColorConsole.WriteLineYellow($"UserActor {_userId} is currently watching '{_currentlyWatching}'");
             Become(Playing);
         }
 
         private void StopPlayingCurrentMovie()
         {
-            ColorConsole.WriteLineYellow("UserActor {0} has stopped watching '{1}'", _userId, _currentlyWatching);
-
+            ColorConsole.WriteLineYellow($"UserActor {_userId} has stopped watching '{_currentlyWatching}'");
             _currentlyWatching = null;
-
             Become(Stopped);
         }
 
+        #region Lifecycle methods 
 
-
-        #region Lifecycle hooks
         protected override void PreStart()
         {
-            ColorConsole.WriteLineYellow("UserActor {0} PreStart", _userId);
+            ColorConsole.WriteLineYellow($"UserActor {_userId} PreStart");
         }
 
         protected override void PostStop()
         {
-            ColorConsole.WriteLineYellow("UserActor {0} PostStop", _userId);
+            ColorConsole.WriteLineYellow($"UserActor {_userId} PostStop");
         }
 
         protected override void PreRestart(Exception reason, object message)
         {
-            ColorConsole.WriteLineYellow("UserActor {0} PreRestart because: {1}", _userId, reason);
-
+            ColorConsole.WriteLineYellow($"UserActor {_userId} PreRestart because: {reason}");
             base.PreRestart(reason, message);
         }
 
         protected override void PostRestart(Exception reason)
         {
-            ColorConsole.WriteLineYellow("UserActor {0} PostRestart because: {1}", _userId, reason);
-
+            ColorConsole.WriteLineYellow($"UserActor {_userId} PostRestart because: {reason}");
             base.PostRestart(reason);
         } 
+
         #endregion
     }
 }

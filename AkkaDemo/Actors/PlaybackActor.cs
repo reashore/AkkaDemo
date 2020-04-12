@@ -1,5 +1,5 @@
 ﻿using System;
-using Akka.Actor; //using System.Runtime.Remoting.Contexts;
+using Akka.Actor;
 
 namespace AkkaDemo.Actors
 {
@@ -11,10 +11,8 @@ namespace AkkaDemo.Actors
             Context.ActorOf(Props.Create<PlaybackStatisticsActor>(), "PlaybackStatistics");        
         }
 
+        #region Lifecycle methods
 
-
-
-        #region Lifecycle hooks
         protected override void PreStart()
         {
             ColorConsole.WriteLineGreen("PlaybackActor PreStart");
@@ -27,14 +25,14 @@ namespace AkkaDemo.Actors
 
         protected override void PreRestart(Exception reason, object message)
         {
-            ColorConsole.WriteLineGreen("PlaybackActor PreRestart because: " + reason);
+            ColorConsole.WriteLineGreen($"PlaybackActor PreRestart because: {reason}");
 
             base.PreRestart(reason, message);
         }
 
         protected override void PostRestart(Exception reason)
         {
-            ColorConsole.WriteLineGreen("PlaybackActor PostRestart because: " + reason);
+            ColorConsole.WriteLineGreen($"PlaybackActor PostRestart because: {reason}");
 
             base.PostRestart(reason);
         } 

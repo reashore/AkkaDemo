@@ -18,7 +18,7 @@ namespace AkkaDemo
             ColorConsole.WriteLineGray("Creating actor supervisory hierarchy");
             _movieStreamingActorSystem.ActorOf(Props.Create<PlaybackActor>(), "Playback");
 
-            do
+            while (true)
             {
                 Thread.Sleep(500);
 
@@ -33,6 +33,7 @@ namespace AkkaDemo
                     continue;
                 }
 
+                command = command.ToLower();
                 string[] commandArray = command.Split(',');
 
                 if (command.StartsWith("play"))
@@ -41,7 +42,8 @@ namespace AkkaDemo
                     string movieTitle = commandArray[2];
 
                     PlayMovieMessage message = new PlayMovieMessage(movieTitle, userId);
-                    _movieStreamingActorSystem.ActorSelection("/user/Playback/UserCoordinator").Tell(message);
+                    const string selector = "/user/Playback/UserCoordinator";
+                    _movieStreamingActorSystem.ActorSelection(selector).Tell(message);
                 }
 
                 if (command.StartsWith("stop"))
@@ -49,20 +51,20 @@ namespace AkkaDemo
                     int userId = int.Parse(commandArray[1]);                    
 
                     StopMovieMessage message = new StopMovieMessage(userId);
-                    _movieStreamingActorSystem.ActorSelection("/user/Playback/UserCoordinator").Tell(message);
+                    const string selector = "/user/Playback/UserCoordinator";
+                    _movieStreamingActorSystem.ActorSelection(selector).Tell(message);
                 }
 
                 if (command == "exit")
                 {
-                    //MovieStreamingActorSystem.Shutdown();
                     _movieStreamingActorSystem.Terminate();
-                    //MovieStreamingActorSystem.AwaitTermination();
                     ColorConsole.WriteLineGray("Actor system shutdown");
                     Console.ReadKey();
-                    Environment.Exit(1);
+                    break;
                 }
+            }
 
-            } while (true);
+            Environment.Exit(1);
         }
     }
 }

@@ -1,18 +1,15 @@
 ﻿using System;
 using Akka.Actor;
 
-//using MovieStreaming.Exceptions;
-
 namespace AkkaDemo.Actors
 {
     public class PlaybackStatisticsActor : ReceiveActor
     {
         public PlaybackStatisticsActor()
         {
-            
         }
 
-        #region Lifecycle hooks
+        #region Lifecycle methods
 
         protected override void PreStart()
         {
@@ -26,15 +23,13 @@ namespace AkkaDemo.Actors
 
         protected override void PreRestart(Exception reason, object message)
         {
-            ColorConsole.WriteWhite("PlaybackStatisticsActor PreRestart because: {0}", reason.Message);
-
+            ColorConsole.WriteWhite($"PlaybackStatisticsActor PreRestart because: {reason.Message}");
             base.PreRestart(reason, message);
         }
 
         protected override void PostRestart(Exception reason)
         {
-            ColorConsole.WriteWhite("PlaybackStatisticsActor PostRestart because: {0} ", reason.Message);
-
+            ColorConsole.WriteWhite($"PlaybackStatisticsActor PostRestart because: {reason.Message}");
             base.PostRestart(reason);
         }
 
