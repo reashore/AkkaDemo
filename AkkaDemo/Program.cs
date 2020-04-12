@@ -12,18 +12,17 @@ namespace AkkaDemo
 
         private static void Main()
         {
-            ColorConsole.WriteGray("Creating MovieStreamingActorSystem");
+            ColorConsole.WriteLineGray("Creating MovieStreamingActorSystem");
             _movieStreamingActorSystem = ActorSystem.Create("MovieStreamingActorSystem");            
 
-            ColorConsole.WriteGray("Creating actor supervisory hierarchy");
+            ColorConsole.WriteLineGray("Creating actor supervisory hierarchy");
             _movieStreamingActorSystem.ActorOf(Props.Create<PlaybackActor>(), "Playback");
 
             while (true)
             {
                 Thread.Sleep(500);
                 Console.WriteLine();
-                //Console.ForegroundColor = ConsoleColor.DarkGray;
-                ColorConsole.WriteGray("Enter command");
+                ColorConsole.WriteGray("Enter command > ");
                 string command = Console.ReadLine();
 
                 if (command == null)
@@ -56,7 +55,7 @@ namespace AkkaDemo
                 if (command == "exit")
                 {
                     _movieStreamingActorSystem.Terminate();
-                    ColorConsole.WriteGray("Actor system shutdown");
+                    ColorConsole.WriteLineGray("Actor system shutdown");
                     break;
                 }
             }

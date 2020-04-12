@@ -39,7 +39,7 @@ namespace AkkaDemo.Actors
             IActorRef newChildActorRef = Context.ActorOf(Props.Create(() => new UserActor(userId)), userName);
             _userDictionary.Add(userId, newChildActorRef);
             int userCount = _userDictionary.Count;
-            ColorConsole.WriteCyan($"UserCoordinatorActor created new child UserActor for {userId} (Total Users: {userCount})");
+            ColorConsole.WriteLineCyan($"UserCoordinatorActor created new child UserActor for {userId} (Total Users: {userCount})");
         }
 
 
@@ -47,23 +47,23 @@ namespace AkkaDemo.Actors
 
         protected override void PreStart()
         {
-            ColorConsole.WriteCyan("UserCoordinatorActor PreStart");
+            ColorConsole.WriteLineCyan("UserCoordinatorActor PreStart");
         }
 
         protected override void PostStop()
         {
-            ColorConsole.WriteCyan("UserCoordinatorActor PostStop");
+            ColorConsole.WriteLineCyan("UserCoordinatorActor PostStop");
         }
 
         protected override void PreRestart(Exception reason, object message)
         {
-            ColorConsole.WriteCyan($"UserCoordinatorActor PreRestart because: {reason}");
+            ColorConsole.WriteLineCyan($"UserCoordinatorActor PreRestart because: {reason}");
             base.PreRestart(reason, message);
         }
 
         protected override void PostRestart(Exception reason)
         {
-            ColorConsole.WriteCyan($"UserCoordinatorActor PostRestart because: {reason}");
+            ColorConsole.WriteLineCyan($"UserCoordinatorActor PostRestart because: {reason}");
             base.PostRestart(reason);
         } 
 

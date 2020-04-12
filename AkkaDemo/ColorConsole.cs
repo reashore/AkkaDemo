@@ -1,4 +1,5 @@
 ﻿using System;
+//using System.Console;
 
 namespace AkkaDemo
 {
@@ -6,7 +7,7 @@ namespace AkkaDemo
     {
         private static readonly object LockObject = new object();
 
-        private static void Write(ConsoleColor color, string message)
+        private static void WriteLine(ConsoleColor color, string message)
         {
             lock (LockObject)
             {
@@ -15,24 +16,38 @@ namespace AkkaDemo
             }
         }
 
-        public static void WriteGreen(string message, params object[] args)
+        private static void Write(ConsoleColor color, string message)
         {
-            Write(ConsoleColor.Green, string.Format(message, args));            
+            lock (LockObject)
+            {
+                Console.ForegroundColor = color;
+                Console.Write(message);
+            }
         }
 
-        public static void WriteYellow(string message, params object[] args)
+        public static void WriteLineGreen(string message, params object[] args)
         {
-            Write(ConsoleColor.Yellow, string.Format(message, args));
+            WriteLine(ConsoleColor.Green, string.Format(message, args));            
         }
 
-        public static void WriteRed(string message, params object[] args)
+        public static void WriteLineYellow(string message, params object[] args)
         {
-            Write(ConsoleColor.Red, string.Format(message, args));
+            WriteLine(ConsoleColor.Yellow, string.Format(message, args));
         }
 
-        public static void WriteCyan(string message, params object[] args)
+        public static void WriteLineRed(string message, params object[] args)
         {
-            Write(ConsoleColor.Cyan, string.Format(message, args));
+            WriteLine(ConsoleColor.Red, string.Format(message, args));
+        }
+
+        public static void WriteLineCyan(string message, params object[] args)
+        {
+            WriteLine(ConsoleColor.Cyan, string.Format(message, args));
+        }
+
+        public static void WriteLineGray(string message, params object[] args)
+        {
+            WriteLine(ConsoleColor.Gray, string.Format(message, args));
         }
 
         public static void WriteGray(string message, params object[] args)
@@ -40,14 +55,14 @@ namespace AkkaDemo
             Write(ConsoleColor.Gray, string.Format(message, args));
         }
 
-        //public static void WriteMagenta(string message, params object[] args)
-        //{
-        //    Write(ConsoleColor.Magenta, string.Format(message, args));
-        //}
-
-        public static void WriteWhite(string message, params object[] args)
+        public static void WriteLineMagenta(string message, params object[] args)
         {
-            Write(ConsoleColor.White, string.Format(message, args));
+            WriteLine(ConsoleColor.Magenta, string.Format(message, args));
+        }
+
+        public static void WriteLineWhite(string message, params object[] args)
+        {
+            WriteLine(ConsoleColor.White, string.Format(message, args));
         }
     }
 }
