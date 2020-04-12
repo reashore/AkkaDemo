@@ -2,7 +2,7 @@
 {
     public class IncrementPlayCountMessage
     {
-        public string MovieTitle { get; private set; }
+        public string MovieTitle { get; }
 
         public IncrementPlayCountMessage(string movieTitle)
         {

@@ -5,9 +5,9 @@ namespace AkkaDemo.Actors
 {
     public class PlaybackStatisticsActor : ReceiveActor
     {
-        public PlaybackStatisticsActor()
-        {
-        }
+        //public PlaybackStatisticsActor()
+        //{
+        //}
 
         #region Lifecycle methods
 

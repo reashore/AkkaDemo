@@ -2,7 +2,7 @@
 {
     public class StopMovieMessage
     {
-        public int UserId { get; private set; }
+        public int UserId { get; }
 
         public StopMovieMessage(int userId)
         {

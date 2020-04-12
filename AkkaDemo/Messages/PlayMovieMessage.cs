@@ -2,8 +2,8 @@
 {
     public class PlayMovieMessage
     {
-        public string MovieTitle { get; private set; }
-        public int UserId { get; private set; }
+        public string MovieTitle { get; }
+        public int UserId { get; }
 
         public PlayMovieMessage(string movieTitle, int userId)
         {
