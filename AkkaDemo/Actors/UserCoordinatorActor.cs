@@ -37,15 +37,16 @@ namespace AkkaDemo.Actors
 
         private void CreateChildUserIfNotExists(int userId)
         {
-            if (!_users.ContainsKey(userId))
+            if (_users.ContainsKey(userId))
             {
-                IActorRef newChildActorRef = 
-                    Context.ActorOf(Props.Create(() => new UserActor(userId)), "User" + userId);
-
-                _users.Add(userId, newChildActorRef);
-
-                ColorConsole.WriteLineCyan("UserCoordinatorActor created new child UserActor for {0} (Total Users: {1})", userId, _users.Count);
+                return;
             }
+
+            string userName = $"User{userId}";
+            IActorRef newChildActorRef = Context.ActorOf(Props.Create(() => new UserActor(userId)), userName);
+            _users.Add(userId, newChildActorRef);
+            int userCount = _users.Count;
+            ColorConsole.WriteLineCyan($"UserCoordinatorActor created new child UserActor for {userId} (Total Users: {userCount})");
         }
 
 

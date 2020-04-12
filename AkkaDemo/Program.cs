@@ -8,61 +8,61 @@ namespace AkkaDemo
 {
     internal class Program
     {
-        private static ActorSystem MovieStreamingActorSystem;
+        private static ActorSystem _movieStreamingActorSystem;
 
-        private static void Main(string[] args)
+        private static void Main()
         {
             ColorConsole.WriteLineGray("Creating MovieStreamingActorSystem");
-            MovieStreamingActorSystem = ActorSystem.Create("MovieStreamingActorSystem");            
+            _movieStreamingActorSystem = ActorSystem.Create("MovieStreamingActorSystem");            
 
             ColorConsole.WriteLineGray("Creating actor supervisory hierarchy");
-            MovieStreamingActorSystem.ActorOf(Props.Create<PlaybackActor>(), "Playback");
+            _movieStreamingActorSystem.ActorOf(Props.Create<PlaybackActor>(), "Playback");
 
             do
             {
-                ShortPause();
+                Thread.Sleep(500);
 
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 ColorConsole.WriteLineGray("enter a command and hit enter");
                 
-                var command = Console.ReadLine();
+                string command = Console.ReadLine();
+
+                if (command == null)
+                {
+                    continue;
+                }
+
+                string[] commandArray = command.Split(',');
 
                 if (command.StartsWith("play"))
                 {
-                    int userId = int.Parse(command.Split(',')[1]);
-                    string movieTitle = command.Split(',')[2];
+                    int userId = int.Parse(commandArray[1]);
+                    string movieTitle = commandArray[2];
 
-                    var message = new PlayMovieMessage(movieTitle, userId);
-                    MovieStreamingActorSystem.ActorSelection("/user/Playback/UserCoordinator").Tell(message);
+                    PlayMovieMessage message = new PlayMovieMessage(movieTitle, userId);
+                    _movieStreamingActorSystem.ActorSelection("/user/Playback/UserCoordinator").Tell(message);
                 }
 
                 if (command.StartsWith("stop"))
                 {
-                    int userId = int.Parse(command.Split(',')[1]);                    
+                    int userId = int.Parse(commandArray[1]);                    
 
-                    var message = new StopMovieMessage(userId);
-                    MovieStreamingActorSystem.ActorSelection("/user/Playback/UserCoordinator").Tell(message);
+                    StopMovieMessage message = new StopMovieMessage(userId);
+                    _movieStreamingActorSystem.ActorSelection("/user/Playback/UserCoordinator").Tell(message);
                 }
 
                 if (command == "exit")
                 {
-                    //MovieStreamingActorSystem.Stop();
                     //MovieStreamingActorSystem.Shutdown();
-                    MovieStreamingActorSystem.Terminate();
-                    //MovieStreamingActorSystem..AwaitTermination();
+                    _movieStreamingActorSystem.Terminate();
+                    //MovieStreamingActorSystem.AwaitTermination();
                     ColorConsole.WriteLineGray("Actor system shutdown");
                     Console.ReadKey();
                     Environment.Exit(1);
                 }
 
             } while (true);
-        }
-
-        // Perform a short pause for demo purposes to allow console to update nicely
-        private static void ShortPause()
-        {
-            Thread.Sleep(450);
         }
     }
 }

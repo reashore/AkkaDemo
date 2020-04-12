@@ -4,15 +4,11 @@ namespace AkkaDemo
 {
     public static class ColorConsole
     {
-        static object locker = new object();
+        private static readonly object LockObject = new object();
 
         private static void Write(ConsoleColor color, string message)
         {
-            // Locking for demo purposes so we get the correct color output.
-            // This represents shared state accessed by different actors so
-            // should be avoided in practice as it breaks the abstraction
-            // of the Actor Model.
-            lock (locker)
+            lock (LockObject)
             {
                 Console.ForegroundColor = color;
                 Console.WriteLine(message);

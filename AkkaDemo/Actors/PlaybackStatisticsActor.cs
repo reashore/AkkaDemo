@@ -12,8 +12,6 @@ namespace AkkaDemo.Actors
             
         }
 
-    
-
         #region Lifecycle hooks
 
         protected override void PreStart()
@@ -39,6 +37,7 @@ namespace AkkaDemo.Actors
 
             base.PostRestart(reason);
         }
+
         #endregion
     }
 }
