@@ -1,5 +1,4 @@
 ﻿using System;
-//using System.Console;
 
 namespace AkkaDemo
 {
